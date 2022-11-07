@@ -1,16 +1,39 @@
-import React from "react";
+import userEvent from "@testing-library/user-event";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
+import { AuthContext } from "../../context/authProvider/AuthProvider";
 
 const Header = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handlerLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch();
+  };
+
   const menuItems = (
     <>
       <li className="font-semibold">
         <Link to="/home">Home</Link>
       </li>
-      <li className="font-semibold">
-        <Link to="/login">Login</Link>
-      </li>
+      {user?.email ? (
+        <>
+          <li className="font-semibold">
+            <Link to="/orders">Orders</Link>
+          </li>
+          <li className="font-semibold">
+            <button onClick={handlerLogOut} className="btb btn-ghost">
+              Log Out
+            </button>
+          </li>
+        </>
+      ) : (
+        <li className="font-semibold">
+          <Link to="/login">Login</Link>
+        </li>
+      )}
     </>
   );
   return (

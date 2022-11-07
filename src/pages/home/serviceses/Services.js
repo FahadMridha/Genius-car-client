@@ -5,7 +5,7 @@ import ServicacesCard from "./ServicacesCard";
 const Services = () => {
   const [services, setServices] = useState([]);
   useEffect(() => {
-    fetch("services.json")
+    fetch("https://genius-car-server-five-rouge.vercel.app/services")
       .then((res) => res.json())
       .then((data) => setServices(data));
   }, []);
